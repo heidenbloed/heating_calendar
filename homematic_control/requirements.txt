@@ -1,2 +1,3 @@
 homematicip==1.1.*
 schedule==1.2.*
+surrealdb==0.3.*
