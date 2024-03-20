@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto w-96">
     <div class="flex flex-col place-items-center gap-4 p-4">
-      <h1 class="text-4xl font-bold">Heizkalendar</h1>
+      <h1 class="text-4xl font-bold">Heizkalender</h1>
       <VCalendar
         transparent
         borderless

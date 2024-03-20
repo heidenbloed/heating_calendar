@@ -3,7 +3,7 @@ import { Surreal } from "surrealdb.js";
 const db = new Surreal();
 
 export async function connectToDb() {
-  await db.connect("http://localhost:8000/rpc", {
+  await db.connect(`http://${location.hostname}:8000/rpc`, {
     // Set the namespace and database for the connection
     namespace: "heating_calendar",
     database: "heating_calendar",
