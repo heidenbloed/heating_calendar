@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto w-96">
     <div class="flex flex-col place-items-center gap-4 p-4">
-      <h1 class="text-4xl font-bold">Heating calendar</h1>
+      <h1 class="text-4xl font-bold">Heizkalendar</h1>
       <VCalendar
         transparent
         borderless
@@ -18,13 +18,14 @@
 
 <script setup lang="ts">
 import { CalendarDay } from "v-calendar/dist/types/src/utils/page.js";
-import { computed, ref } from "vue";
-
-interface CalendarDate {
-  day: number;
-  month: number;
-  year: number;
-}
+import { computed, onMounted, ref } from "vue";
+import {
+  CalendarDate,
+  addHeatingDate,
+  connectToDb,
+  getHeatingDates,
+  removeHeatingDate,
+} from "./heatingCalendarApi";
 
 const highlightDates = ref<Array<CalendarDate>>([]);
 const calendarAttributes = computed(() => {
@@ -44,11 +45,21 @@ const calendarAttributes = computed(() => {
   ];
 });
 
-function onDayClick(calandarDay: CalendarDay) {
+onMounted(async () => {
+  await connectToDb();
+  updateHeatingDates();
+});
+
+async function updateHeatingDates() {
+  const heatingDates = await getHeatingDates();
+  highlightDates.value = heatingDates;
+}
+
+async function onDayClick(calendarDay: CalendarDay) {
   const calendarDate = {
-    day: calandarDay.day,
-    month: calandarDay.month,
-    year: calandarDay.year,
+    day: calendarDay.day,
+    month: calendarDay.month,
+    year: calendarDay.year,
   };
   const highlightIndex = highlightDates.value.findIndex(
     (elem) =>
@@ -57,9 +68,10 @@ function onDayClick(calandarDay: CalendarDay) {
       elem.year === calendarDate.year,
   );
   if (highlightIndex >= 0) {
-    highlightDates.value.splice(highlightIndex, 1);
+    await removeHeatingDate(calendarDate);
   } else {
-    highlightDates.value.push(calandarDay);
+    await addHeatingDate(calendarDate);
   }
+  await updateHeatingDates();
 }
 </script>
