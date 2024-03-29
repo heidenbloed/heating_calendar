@@ -8,6 +8,7 @@ echo "Run vite build."
 cd heating_calendar_frontend
 npm install
 npx vite build --outDir dist
+sudo rm -r /var/www/heating_calendar_frontend
 sudo cp -r dist /var/www/heating_calendar_frontend
 cd ..
 
