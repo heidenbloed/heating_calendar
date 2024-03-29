@@ -26,7 +26,7 @@ export interface CalendarDate {
 
 export async function getHeatingDates(): Promise<Array<CalendarDate>> {
   const heatingCalendarEntries = (
-    await db.query("SELECT * FROM heating_calendar WHERE heating = true")
+    await db.query("SELECT * FROM heating_calendar")
   )[0] as any[];
   return heatingCalendarEntries.map((heatingCalendarEntry: any) => {
     const heatingDate = new Date(heatingCalendarEntry["date"]);
