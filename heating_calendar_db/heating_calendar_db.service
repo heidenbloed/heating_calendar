@@ -4,9 +4,9 @@ After=multi-user.target
 
 [Service]
 Type=simple
-User=pi
-ExecStart=/home/pi/git/heating_calendar/heating_calendar_db/start_db.sh
-WorkingDirectory=/home/pi/git/heating_calendar/heating_calendar_db
+User=tim
+ExecStart=surreal start --log trace --auth --bind 0.0.0.0:9000 file:heating_calendar.db
+WorkingDirectory=/home/tim/git/heating_calendar/heating_calendar_db
 StandardOutput=syslog
 StandardError=syslog
 Restart=always
