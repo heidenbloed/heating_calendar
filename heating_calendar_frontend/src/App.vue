@@ -1,4 +1,5 @@
 <template>
+  <LoginView />
   <div class="mx-auto w-96">
     <div class="flex flex-col place-items-center gap-4 p-4">
       <h1 class="text-4xl font-bold">Heizkalender</h1>
@@ -19,13 +20,10 @@
 <script setup lang="ts">
 import { CalendarDay } from "v-calendar/dist/types/src/utils/page.js";
 import { computed, onMounted, ref } from "vue";
-import {
-  CalendarDate,
-  addHeatingDate,
-  connectToDb,
-  getHeatingDates,
-  removeHeatingDate,
-} from "./heatingCalendarApi";
+import LoginView from "./components/LoginView.vue";
+import { CalendarDate, useAuthDb } from "./stores/authDb";
+
+const db = useAuthDb();
 
 const highlightDates = ref<Array<CalendarDate>>([]);
 const calendarAttributes = computed(() => {
@@ -46,12 +44,11 @@ const calendarAttributes = computed(() => {
 });
 
 onMounted(async () => {
-  await connectToDb();
   updateHeatingDates();
 });
 
 async function updateHeatingDates() {
-  const heatingDates = await getHeatingDates();
+  const heatingDates = await db.getHeatingDates();
   highlightDates.value = heatingDates;
 }
 
@@ -68,9 +65,9 @@ async function onDayClick(calendarDay: CalendarDay) {
       elem.year === calendarDate.year,
   );
   if (highlightIndex >= 0) {
-    await removeHeatingDate(calendarDate);
+    await db.removeHeatingDate(calendarDate);
   } else {
-    await addHeatingDate(calendarDate);
+    await db.addHeatingDate(calendarDate);
   }
   await updateHeatingDates();
 }

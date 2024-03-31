@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@vueuse/core": "^10.9.0",
+    "pinia": "^2.1.7",
     "surrealdb.js": "^0.11.0",
     "v-calendar": "^3.1.2",
     "vue": "^3.4.21"
