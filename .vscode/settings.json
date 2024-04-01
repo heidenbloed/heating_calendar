@@ -3,5 +3,5 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": "explicit"
     },
-    "editor.formatOnPaste": true
+    "editor.formatOnPaste": false
 }

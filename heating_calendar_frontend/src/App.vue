@@ -18,12 +18,15 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { CalendarDay } from "v-calendar/dist/types/src/utils/page.js";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import LoginView from "./components/LoginView.vue";
 import { CalendarDate, useAuthDb } from "./stores/authDb";
 
 const db = useAuthDb();
+const { isLoggedIn } = storeToRefs(db);
+watch(isLoggedIn, updateHeatingDates);
 
 const highlightDates = ref<Array<CalendarDate>>([]);
 const calendarAttributes = computed(() => {
@@ -41,10 +44,6 @@ const calendarAttributes = computed(() => {
       order: 0,
     },
   ];
-});
-
-onMounted(async () => {
-  updateHeatingDates();
 });
 
 async function updateHeatingDates() {

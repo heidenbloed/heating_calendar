@@ -68,8 +68,6 @@ async function onSubmit() {
     (await db.login(_username.value, _password.value));
   if (!successfulLogin) {
     shakeSubmitButton();
-  } else {
-    location.reload();
   }
 }
 </script>

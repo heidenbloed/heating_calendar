@@ -1,7 +1,7 @@
 import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { Surreal } from "surrealdb.js";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 export interface CalendarDate {
   day: number;
@@ -12,36 +12,40 @@ export interface CalendarDate {
 export const useAuthDb = defineStore("db", () => {
   const db = new Surreal();
 
-  const authToken = useLocalStorage<string | null>("authToken", null);
-  const isLoggedIn = computed(() => authToken.value !== null);
+  const dbUsername = useLocalStorage<string | null>("dbUsername", null);
+  const dbPassword = useLocalStorage<string | null>("dbPassword", null);
+  const credentialsAvailable = computed(
+    () => dbUsername.value !== null && dbPassword.value !== null,
+  );
+  const isLoggedIn = ref(false);
 
   async function login(username: string, password: string): Promise<boolean> {
     try {
-      const token = await db.signin({
+      await db.signin({
         namespace: "heating_calendar",
         username: username,
         password: password,
       });
-      authToken.value = token;
+      dbUsername.value = username;
+      dbPassword.value = password;
+      isLoggedIn.value = true;
       return true;
     } catch (error) {
+      dbUsername.value = null;
+      dbPassword.value = null;
+      isLoggedIn.value = false;
       return false;
     }
-  }
-
-  async function auth(): Promise<boolean> {
-    if (authToken.value === null) {
-      return false;
-    }
-    return await db.authenticate(authToken.value);
   }
 
   onMounted(async () => {
-    await db.connect(`https://heizkalender.heidenblut.eu/db/`, {
+    await db.connect(`https://${location.host}/db/`, {
       namespace: "heating_calendar",
       database: "heating_calendar",
     });
-    await auth();
+    if (!isLoggedIn.value && credentialsAvailable.value) {
+      await login(dbUsername.value as string, dbPassword.value as string);
+    }
   });
 
   async function getHeatingDates(): Promise<Array<CalendarDate>> {
