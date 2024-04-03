@@ -1,17 +1,14 @@
-import datetime
 import logging
 import time
 
 import lab_temp_controller
 import schedule
 
-HEATING_CALENDAR = [
-    datetime.datetime.today() + datetime.timedelta(days=day_offset)
-    for day_offset in range(0, 10, 2)
-]
+import heating_calendar
+
 HEATING_ON_TEMP = 20.0
 HEATING_OFF_TEMP = 14.0
-HEATING_ON_TIME = "07:00"
+HEATING_ON_TIME = "06:45"
 HEATING_OFF_TIME = "16:00"
 
 
@@ -32,7 +29,7 @@ class HeatingSchedular:
 
     def _apply_todays_heating_settings(self):
         logging.info("Apply todays heating settings.")
-        if datetime.datetime.today() in HEATING_CALENDAR:
+        if heating_calendar.is_today_heating_on():
             logging.info(
                 f"Today the heating will be turned on between {HEATING_ON_TIME} and {HEATING_OFF_TIME}."
             )
