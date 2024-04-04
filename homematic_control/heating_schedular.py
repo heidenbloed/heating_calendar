@@ -15,7 +15,7 @@ HEATING_OFF_TIME = "16:00"
 class HeatingSchedular:
 
     def __init__(self):
-        self._lab_controler = lab_temp_controller.LabTempController
+        self._lab_controller = lab_temp_controller.LabTempController()
 
     def run_endless(self):
         schedule.every().day.at(HEATING_ON_TIME).do(self._apply_todays_heating_settings)
@@ -33,12 +33,12 @@ class HeatingSchedular:
             logging.info(
                 f"Today the heating will be turned on between {HEATING_ON_TIME} and {HEATING_OFF_TIME}."
             )
-            self._lab_controler.set_temp(HEATING_ON_TEMP)
+            self._lab_controller.set_temp(HEATING_ON_TEMP)
             schedule.every().day.at(HEATING_OFF_TIME).do(self._turn_off_heating)
         else:
             logging.info("Today the heating will not be turned on.")
 
     def _turn_off_heating(self) -> schedule.CancelJob:
         logging.info("Turn off the heating for today.")
-        self._lab_controler.set_temp(HEATING_OFF_TEMP)
+        self._lab_controller.set_temp(HEATING_OFF_TEMP)
         return schedule.CancelJob
