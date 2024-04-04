@@ -13,7 +13,6 @@ HEATING_OFF_TIME = "16:00"
 
 
 class HeatingSchedular:
-
     def __init__(self):
         self._lab_controller = lab_temp_controller.LabTempController()
 
@@ -31,7 +30,8 @@ class HeatingSchedular:
         logging.info("Apply todays heating settings.")
         if heating_calendar.is_today_heating_on():
             logging.info(
-                f"Today the heating will be turned on between {HEATING_ON_TIME} and {HEATING_OFF_TIME}."
+                f"Today the heating will be turned on between {HEATING_ON_TIME} and"
+                f" {HEATING_OFF_TIME}."
             )
             self._lab_controller.set_temp(HEATING_ON_TEMP)
             schedule.every().day.at(HEATING_OFF_TIME).do(self._turn_off_heating)

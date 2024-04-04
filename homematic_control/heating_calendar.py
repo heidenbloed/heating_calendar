@@ -8,7 +8,10 @@ DB_USER = os.environ["HEATING_CALENDAR_DB_USER"]
 DB_PASS = os.environ["HEATING_CALENDAR_DB_PASS"]
 DB_NAMESPACE = "heating_calendar"
 DB_NAME = "heating_calendar"
-TODAYS_HEATING_SETTING_QUERY = "SELECT * FROM heating_calendar WHERE date > time::now() - 12h && date < time::now() + 12h;"
+TODAYS_HEATING_SETTING_QUERY = (
+    "SELECT * FROM heating_calendar WHERE date > time::now() - 12h && date <"
+    " time::now() + 12h;"
+)
 
 
 def is_today_heating_on() -> bool:

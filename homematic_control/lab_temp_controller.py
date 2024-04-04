@@ -1,12 +1,11 @@
 import homematicip
-import homematicip.home
 import homematicip.group
+import homematicip.home
 
 LAB_HEATING_GROUP_ID = "f97c443b-75f9-430a-9458-d24be5c3ec05"
 
 
 class LabTempController:
-
     def __init__(self):
         home_config = homematicip.find_and_load_config_file()
         self._home = homematicip.home.Home()

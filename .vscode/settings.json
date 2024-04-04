@@ -3,5 +3,20 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": "explicit"
     },
-    "editor.formatOnPaste": false
+    "editor.formatOnPaste": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.rulers": [
+            88
+        ]
+    },
+    "black-formatter.args": [
+        "--preview"
+    ],
+    "black-formatter.importStrategy": "fromEnvironment",
+    "isort.importStrategy": "fromEnvironment",
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
 }
