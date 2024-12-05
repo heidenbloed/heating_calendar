@@ -70,7 +70,7 @@ export const useAuthDb = defineStore("db", () => {
       const paddedMonth = String(calendarDate.month).padStart(2, "0");
       const paddedDay = String(calendarDate.day).padStart(2, "0");
       const isoDate = `${calendarDate.year}-${paddedMonth}-${paddedDay}T06:00:00Z`;
-      await db.query(`CREATE heating_calendar CONTENT {"date": "${isoDate}"}`);
+      await db.query(`CREATE heating_calendar CONTENT {"date": d"${isoDate}"}`);
     }
   }
 
@@ -80,7 +80,7 @@ export const useAuthDb = defineStore("db", () => {
       const paddedDay = String(calendarDate.day).padStart(2, "0");
       const isoDate = `${calendarDate.year}-${paddedMonth}-${paddedDay}T06:00:00Z`;
       await db.query(
-        `DELETE heating_calendar WHERE date > "${isoDate}" - 12h && date < "${isoDate}" + 12h`,
+        `DELETE heating_calendar WHERE date > d"${isoDate}" - 12h && date < d"${isoDate}" + 12h`,
       );
     }
   }
