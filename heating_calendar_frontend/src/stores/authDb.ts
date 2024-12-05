@@ -39,7 +39,7 @@ export const useAuthDb = defineStore("db", () => {
   }
 
   onMounted(async () => {
-    await db.connect(`https://${location.host}/db/`, {
+    await db.connect(`wss://heating-calenda-069ph70s3dv4jc40iunj9q4vv0.aws-euw1.surreal.cloud`, {
       namespace: "heating_calendar",
       database: "heating_calendar",
     });

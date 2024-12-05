@@ -1,1 +1,1 @@
-cat create_table.surql | surreal sql --endpoint http://localhost:9000 --username root --password $HEATING_CALENDAR_DB_PASS --namespace heating_calendar --database heating_calendar
+cat create_table.surql | surreal sql --endpoint $HEATING_CALENDAR_DB_URL --username root --password $HEATING_CALENDAR_DB_ROOT_PASS --namespace heating_calendar --database heating_calendar

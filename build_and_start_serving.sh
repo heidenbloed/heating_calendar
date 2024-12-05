@@ -1,9 +1,4 @@
 #!/bin/zsh
-echo "Init database."
-cd heating_calendar_db
-./install_service.sh
-cd ..
-
 echo "Run vite build."
 cd heating_calendar_frontend
 npm install
