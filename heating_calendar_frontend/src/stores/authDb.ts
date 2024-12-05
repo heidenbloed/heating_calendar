@@ -1,6 +1,6 @@
 import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
-import { Surreal } from "surrealdb.js";
+import { Surreal } from "surrealdb";
 import { computed, onMounted, ref } from "vue";
 
 export interface CalendarDate {
@@ -22,7 +22,6 @@ export const useAuthDb = defineStore("db", () => {
   async function login(username: string, password: string): Promise<boolean> {
     try {
       await db.signin({
-        namespace: "heating_calendar",
         username: username,
         password: password,
       });
@@ -39,9 +38,9 @@ export const useAuthDb = defineStore("db", () => {
   }
 
   onMounted(async () => {
-    await db.connect(`wss://heating-calenda-069ph70s3dv4jc40iunj9q4vv0.aws-euw1.surreal.cloud`, {
+    await db.connect("wss://heating-calenda-069ph70s3dv4jc40iunj9q4vv0.aws-euw1.surreal.cloud", {
       namespace: "heating_calendar",
-      database: "heating_calendar",
+      database: "heating_calendar"
     });
     if (!isLoggedIn.value && credentialsAvailable.value) {
       await login(dbUsername.value as string, dbPassword.value as string);
