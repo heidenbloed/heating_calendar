@@ -1,5 +1,5 @@
 homematicip==1.1.*
 schedule==1.2.*
-surrealdb==0.3.*
+requests==2.32.*
 black==22.10.*
 isort==5.13.*
