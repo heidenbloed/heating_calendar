@@ -27,6 +27,7 @@ class User(pydantic.BaseModel):
 class Token(pydantic.BaseModel):
     access_token: str
     token_type: str
+    expire: datetime.datetime
 
 
 def authenticate_user(username: str, password: str) -> bool | User:
@@ -73,7 +74,7 @@ async def login(
     )
     access_token = {"sub": user.username, "exp": expire}
     encoded_jwt = jwt.encode(access_token, SECRET_KEY, algorithm=ALGORITHM)
-    return Token(access_token=encoded_jwt, token_type="bearer")
+    return Token(access_token=encoded_jwt, token_type="bearer", expire=expire)
 
 
 @app.get("/heating_days")
