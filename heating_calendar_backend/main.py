@@ -110,3 +110,14 @@ def toggle_heating_day(
     conn.commit()
     conn.close()
     return get_heating_days(token)
+
+
+@app.get("/is_today_a_heating_day")
+def is_today_a_heating_day() -> bool:
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    heating_days = cursor.execute(
+        "SELECT * FROM heating_calendar WHERE date = CURRENT_DATE"
+    ).fetchall()
+    conn.close()
+    return len(heating_days) > 0

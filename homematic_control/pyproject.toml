@@ -1,0 +1,8 @@
+[project]
+name = "homematic-control"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["homematicip>=1.1.5", "schedule>=1.2.2"]
+
+[dependency-groups]
+dev = ["ruff>=0.14.14"]
