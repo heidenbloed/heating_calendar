@@ -4,13 +4,14 @@ After=multi-user.target
 
 [Service]
 Type=simple
-User=pi
-ExecStart=uv run fastapi run /home/pi/git/heating_calendar/heating_calendar_backend/main.py --port 8000 --root-path api
-WorkingDirectory=/home/pi/git/heating_calendar/heating_calendar_backend
+User=tim
+ExecStart=/home/tim/git/heating_calendar/heating_calendar_backend/run_backend.sh
+WorkingDirectory=/home/tim/git/heating_calendar/heating_calendar_backend
 StandardOutput=syslog
 StandardError=syslog
 Restart=always
 RestartSec=3
+Environment="HEATING_CALENDAR_DB_PATH=/home/tim/git/heating_calendar/heating_calendar_db/heating_calendar.db"
 
 [Install]
 WantedBy=multi-user.target
