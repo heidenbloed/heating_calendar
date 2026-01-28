@@ -1,4 +1,4 @@
-#! venv/bin/python
+#! .venv/bin/python
 import logging
 
 import heating_schedular

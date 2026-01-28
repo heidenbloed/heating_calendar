@@ -11,6 +11,7 @@ StandardOutput=syslog
 StandardError=syslog
 Restart=always
 RestartSec=3
+Environment="HEATING_CALENDAR_API_URL=https://heizkalender.heidenblut.eu/api"
 
 [Install]
 WantedBy=multi-user.target
