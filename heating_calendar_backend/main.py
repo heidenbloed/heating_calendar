@@ -4,19 +4,28 @@ import sqlite3
 from typing import Annotated
 
 import fastapi
+import fastapi.middleware.cors
 import fastapi.security
 import jwt
 import pwdlib
 import pydantic
 
 DB_PATH = os.environ["HEATING_CALENDAR_DB_PATH"]
-SECRET_KEY = "ff99591ff91f9a0deca7823ef4c62fe5175b813f3eaec98d026a2facba161e6e"
+SECRET_KEY = os.environ["HEATING_CALENDAR_SECRET_KEY"]
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7
 
 app = fastapi.FastAPI()
 oauth2_scheme = fastapi.security.OAuth2PasswordBearer(tokenUrl="token")
 password_hash = pwdlib.PasswordHash.recommended()
+
+app.add_middleware(
+    fastapi.middleware.cors.CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class User(pydantic.BaseModel):
