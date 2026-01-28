@@ -1,2 +1,2 @@
-heating_calendar.db
-history.txt
+*.db
+add_users.sh

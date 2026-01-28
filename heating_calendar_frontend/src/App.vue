@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { CalendarDay } from "v-calendar/dist/types/src/utils/page.js";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import LoginView from "./components/LoginView.vue";
 import { CalendarDate, useAuthDb } from "./stores/authDb";
 
@@ -57,17 +57,9 @@ async function onDayClick(calendarDay: CalendarDay) {
     month: calendarDay.month,
     year: calendarDay.year,
   };
-  const highlightIndex = highlightDates.value.findIndex(
-    (elem) =>
-      elem.day === calendarDate.day &&
-      elem.month === calendarDate.month &&
-      elem.year === calendarDate.year,
-  );
-  if (highlightIndex >= 0) {
-    await db.removeHeatingDate(calendarDate);
-  } else {
-    await db.addHeatingDate(calendarDate);
-  }
-  await updateHeatingDates();
+  const heatingDates = await db.toggleHeatingDay(calendarDate);
+  highlightDates.value = heatingDates;
 }
+
+onMounted(updateHeatingDates);
 </script>

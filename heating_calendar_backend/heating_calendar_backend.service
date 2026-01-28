@@ -1,0 +1,17 @@
+[Unit]
+Description=Heating calendar backend service
+After=multi-user.target
+
+[Service]
+Type=simple
+User=tim
+ExecStart=/home/tim/git/heating_calendar/heating_calendar_backend/run_backend.sh
+WorkingDirectory=/home/tim/git/heating_calendar/heating_calendar_backend
+StandardOutput=syslog
+StandardError=syslog
+Restart=always
+RestartSec=3
+Environment="HEATING_CALENDAR_DB_PATH=/home/tim/git/heating_calendar/heating_calendar_db/heating_calendar.db"
+
+[Install]
+WantedBy=multi-user.target

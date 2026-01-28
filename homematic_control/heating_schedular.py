@@ -22,7 +22,7 @@ class HeatingSchedular:
         logging.info("Enter the endless heating scheduling loop.")
         while True:
             idle_seconds = schedule.idle_seconds()
-            logging.info(f"Sleep for {idle_seconds / (60*60)} hours.")
+            logging.info(f"Sleep for {idle_seconds / (60 * 60)} hours.")
             time.sleep(idle_seconds)
             schedule.run_pending()
 

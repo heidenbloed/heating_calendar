@@ -1,5 +1,0 @@
-homematicip==2.4.*
-schedule==1.2.*
-requests==2.32.*
-black==22.10.*
-isort==5.13.*

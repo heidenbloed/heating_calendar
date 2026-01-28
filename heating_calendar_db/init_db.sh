@@ -1,1 +1,2 @@
-cat create_table.surql | surreal sql --endpoint $HEATING_CALENDAR_DB_URL --username root --password $HEATING_CALENDAR_DB_ROOT_PASS --namespace heating_calendar --database heating_calendar
+sqlite3 "$HEATING_CALENDAR_DB_PATH" "CREATE TABLE heating_calendar (date DATE PRIMARY KEY);"
+sqlite3 "$HEATING_CALENDAR_DB_PATH" "CREATE TABLE users (username TEXT NOT NULL PRIMARY KEY, hashed_password TEXT NOT NULL);"
